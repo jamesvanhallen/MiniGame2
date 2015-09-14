@@ -1,4 +1,4 @@
-package com.james.minigame;
+package com.james.minigame.pojo;
 
 import com.google.gson.annotations.SerializedName;
 

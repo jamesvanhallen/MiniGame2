@@ -1,4 +1,4 @@
-package com.james.minigame;
+package com.james.minigame.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.james.minigame.R;
+import com.james.minigame.database.DBModel;
+
 import java.util.List;
 
 import butterknife.Bind;

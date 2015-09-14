@@ -1,9 +1,10 @@
-package com.james.minigame;
+package com.james.minigame.connection;
+
+import com.james.minigame.pojo.Level;
 
 import java.util.List;
-import retrofit.Call;
+
 import retrofit.http.GET;
-import retrofit.http.Path;
 import rx.Observable;
 
 public interface LevelService {

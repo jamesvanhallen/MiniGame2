@@ -1,4 +1,4 @@
-package com.james.minigame;
+package com.james.minigame.fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.james.minigame.database.DBModel;
+import com.james.minigame.R;
+import com.james.minigame.activity.GameActivity;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.List;
@@ -62,7 +65,6 @@ public class GameActivityFragment extends Fragment {
         mScore.setText(getResources().getString(R.string.score_tv) + currentScore);
         mLevel.setText(getResources().getString(R.string.level_tv) + level);
         mClickBtn.setText(getResources().getString(R.string.plus) + onClick);
-
     }
 
     private void setAnimation(TextView tv) {
@@ -127,11 +129,18 @@ public class GameActivityFragment extends Fragment {
         mFloatingTv.setText(getResources().getString(R.string.plus) + onClick);
         mFloatingTv.setVisibility(View.VISIBLE);
         Random r = new Random();
-        mFloatingTv.setX(r.nextInt(width-16)+16);
+        mFloatingTv.setX(r.nextInt(width-32)+16);
         setAnimation(mFloatingTv);
     }
 
     private void gameOver(int level, int score, int currentScore, int onClick) {
+        this.level = level;
+        this.score = score;
+        this.currentScore = currentScore;
+        this.onClick = onClick;
+        mScore.setText(getResources().getString(R.string.score_tv) + currentScore);
+        mLevel.setText(getResources().getString(R.string.level_tv) + level);
+        mClickBtn.setText(getResources().getString(R.string.plus) + onClick);
         SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor ed = sharedPreferences.edit();
         ed.putInt(getResources().getString(R.string.level), level);
@@ -144,5 +153,11 @@ public class GameActivityFragment extends Fragment {
     @OnClick(R.id.help_btn)
     void onHelpBtnClick(){
         GameActivity.changeFragment(new LevelFragment(), true, getActivity(), R.id.container);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

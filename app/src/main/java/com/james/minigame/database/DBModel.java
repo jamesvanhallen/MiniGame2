@@ -1,4 +1,4 @@
-package com.james.minigame;
+package com.james.minigame.database;
 
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.Database;

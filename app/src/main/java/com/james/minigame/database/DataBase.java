@@ -1,6 +1,4 @@
-package com.james.minigame;
-
-import android.provider.ContactsContract;
+package com.james.minigame.database;
 
 import com.raizlabs.android.dbflow.annotation.Database;
 

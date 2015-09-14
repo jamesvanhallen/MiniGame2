@@ -1,4 +1,4 @@
-package com.james.minigame;
+package com.james.minigame.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.james.minigame.database.DBModel;
+import com.james.minigame.adapter.LevelAdapter;
+import com.james.minigame.R;
 import com.raizlabs.android.dbflow.sql.language.Select;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -30,5 +32,11 @@ public class LevelFragment extends Fragment {
         adapter.setItems(new Select().from(DBModel.class).queryList());
         mLv.setAdapter(adapter);
         return v;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

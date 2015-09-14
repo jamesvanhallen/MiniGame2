@@ -1,21 +1,22 @@
-package com.james.minigame;
+package com.james.minigame.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
-import com.raizlabs.android.dbflow.config.BaseDatabaseDefinition;
-import com.raizlabs.android.dbflow.config.FlowManager;
+import com.james.minigame.connection.ApiFactory;
+import com.james.minigame.database.DBModel;
+import com.james.minigame.fragment.GameActivityFragment;
+import com.james.minigame.pojo.Level;
+import com.james.minigame.connection.LevelService;
+import com.james.minigame.R;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
-import java.util.ArrayList;
 import java.util.List;
+
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 

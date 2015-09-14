@@ -1,4 +1,4 @@
-package com.james.minigame;
+package com.james.minigame.connection;
 
 /**
  * Created by James on 13.09.2015.
