@@ -7,13 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
 import com.james.minigame.database.DBModel;
 import com.james.minigame.adapter.LevelAdapter;
 import com.james.minigame.R;
 import com.raizlabs.android.dbflow.sql.language.Select;
+import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by James on 14.09.2015.
@@ -29,8 +33,16 @@ public class LevelFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_level, container, false);
         ButterKnife.bind(this, v);
         LevelAdapter adapter = new LevelAdapter(getActivity());
-        adapter.setItems(new Select().from(DBModel.class).queryList());
         mLv.setAdapter(adapter);
+        Observable.create(new Observable.OnSubscribe<List<DBModel>>() {
+            @Override
+            public void call(Subscriber<? super List<DBModel>> subscriber) {
+                subscriber.onNext(new Select().from(DBModel.class).queryList());
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(adapter::setItems);
         return v;
     }
 

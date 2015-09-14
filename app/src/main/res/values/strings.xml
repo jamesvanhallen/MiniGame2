@@ -8,10 +8,10 @@
     <string name="Ura">Ура</string>
     <string name="game_over">Вы прошли игру</string>
     <string name="new_game">Начать заново</string>
-    <string name="score_tv">"Score: "</string>
-    <string name="level_tv">"Level: "</string>
-    <string name="plus">+</string>
-    <string name="level_rus">"Уровень "</string>
-    <string name="next_lvl_rus">"Количество очков для перехода на уровень: "</string>
-    <string name="on_click_rus">"Количество очков за клик: "</string>
+    <string name="score_tv">"Score: %d"</string>
+    <string name="level_tv">"Level: %d"</string>
+    <string name="plus">"+%d"</string>
+    <string name="level_rus">"Уровень %d"</string>
+    <string name="next_lvl_rus">"Количество очков для перехода на уровень: %d"</string>
+    <string name="on_click_rus">"Количество очков за клик: %d"</string>
 </resources>

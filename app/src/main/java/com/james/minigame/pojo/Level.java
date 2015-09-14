@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Level{
 
+    public Level() {
+    }
+
     @SerializedName("level")
     private int mLv;
 
@@ -13,10 +16,6 @@ public class Level{
 
     @SerializedName("onclick")
     private int mClick;
-
-    public Level() {
-    }
-
 
     public int getLv() {
         return mLv;

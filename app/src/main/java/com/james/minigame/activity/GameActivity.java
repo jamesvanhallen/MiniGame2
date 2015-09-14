@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-
 import com.james.minigame.connection.ApiFactory;
 import com.james.minigame.database.DBModel;
 import com.james.minigame.fragment.GameActivityFragment;
@@ -14,15 +13,14 @@ import com.james.minigame.pojo.Level;
 import com.james.minigame.connection.LevelService;
 import com.james.minigame.R;
 import com.raizlabs.android.dbflow.sql.language.Select;
-
 import java.util.List;
-
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class GameActivity extends AppCompatActivity {
 
-    private LevelService service;
+    private Observable<List<Level>> mSubscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,23 +35,27 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void query() {
-        service = ApiFactory.getLevelService();
-        service.getLevel()
-                .subscribeOn(Schedulers.io())
+        LevelService service = ApiFactory.getLevelService();
+        mSubscription = service.getLevel();
+        mSubscription.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::createGameFragment);
+                .flatMap(Observable::from)
+                .subscribe(
+                        this::saveLevel,
+                        Throwable::printStackTrace,
+                        this::onCompleted);
 
     }
 
-    private void createGameFragment(List<Level> list){
-        for (Level level : list) {
-            DBModel model = new DBModel();
-            model.setLevel(level.getLv());
-            model.setScore(level.getScore());
-            model.setOnClick(level.getClick());
-            model.save();
-        }
+    private void saveLevel(Level level) {
+        DBModel model = new DBModel();
+        model.setLevel(level.getLv());
+        model.setScore(level.getScore());
+        model.setOnClick(level.getClick());
+        model.save();
+    }
 
+    private void onCompleted() {
         GameActivityFragment frag = new GameActivityFragment();
         changeFragment(frag, false, this, R.id.container);
     }
@@ -76,10 +78,10 @@ public class GameActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        if(service!=null){
-            service.getLevel().unsubscribeOn(Schedulers.io());
+    protected void onStop() {
+        if(mSubscription !=null){
+            mSubscription.unsubscribeOn(Schedulers.io());
         }
-        super.onDestroy();
+        super.onStop();
     }
 }

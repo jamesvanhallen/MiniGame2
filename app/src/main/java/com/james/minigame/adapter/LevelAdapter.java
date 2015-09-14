@@ -6,12 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.james.minigame.R;
 import com.james.minigame.database.DBModel;
-
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -29,7 +26,7 @@ public class LevelAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mHotels.size();
+        return mHotels == null ? 0 : mHotels.size();
     }
 
     @Override
@@ -76,17 +73,15 @@ public class LevelAdapter extends BaseAdapter {
         @Bind(R.id.onclick)
         TextView mOnClick;
 
-
         public ViewHolder(View v) {
             ButterKnife.bind(this, v);
         }
 
         public void bind(DBModel item, Context context) {
 
-            mLevel.setText(context.getResources().getString(R.string.level_rus) + item.getLevel());
-            mScore.setText(context.getResources().getString(R.string.next_lvl_rus) + item.getScore());
-           mOnClick.setText(context.getResources().getString(R.string.on_click_rus) + item.getOnClick());
-
+            mLevel.setText(String.format(context.getResources().getString(R.string.level_rus), item.getLevel()));
+            mScore.setText(String.format(context.getResources().getString(R.string.next_lvl_rus), item.getScore()));
+            mOnClick.setText(String.format(context.getResources().getString(R.string.on_click_rus), item.getOnClick()));
         }
     }
 }

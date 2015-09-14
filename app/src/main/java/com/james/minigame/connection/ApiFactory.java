@@ -38,6 +38,5 @@ public class ApiFactory {
                 .client(CLIENT)
                 .build();
     }
-
 }
 
